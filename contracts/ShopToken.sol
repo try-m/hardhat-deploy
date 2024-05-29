@@ -48,4 +48,12 @@ contract ShopToken is Ownable(msg.sender) {
         require(getBalanceToken() >= valueTokens, "Not enough tokens!");
         TOKEN.transfer(msg.sender, valueTokens);
     }
+
+    function sellTokens(uint _amount) external {
+        uint allowenceToken = TOKEN.allowance(msg.sender, address(this));
+        uint valueEther = _amount * RATE;
+        require(allowenceToken > _amount, "Not approved tokens!");
+        TOKEN.transferFrom(msg.sender, address(this), _amount);
+        payable(msg.sender).transfer(valueEther);
+    }
 }
