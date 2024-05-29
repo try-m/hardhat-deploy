@@ -41,4 +41,11 @@ contract ShopToken is Ownable(msg.sender) {
         require(getBalanceEther() > 0, "Not enough ether!");
         payable(owner()).transfer(getBalanceEther());
     }
+
+    function buyTokens() external payable {
+        require(msg.value > RATE, "Not enough ether!");
+        uint valueTokens = msg.value / RATE;
+        require(getBalanceToken() >= valueTokens, "Not enough tokens!");
+        TOKEN.transfer(msg.sender, valueTokens);
+    }
 }
