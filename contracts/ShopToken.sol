@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 // The ShopToken contract does this and that...
-contract ShopToken {
+contract ShopToken is Ownable(msg.sender) {
     IERC20 public TOKEN;
     uint public RATE;
 
@@ -20,5 +20,15 @@ contract ShopToken {
 
     function getBalanceEther() public view returns (uint balanceEther) {
         balanceEther = address(this).balance;
+    }
+
+    function setToken(address token_) external onlyOwner {
+        require(token_ != address(0));
+        TOKEN = IERC20(token_);
+    }
+
+    function setRate(uint rate_) external onlyOwner {
+        require(rate_ > 0);
+        RATE = rate_;
     }
 }
