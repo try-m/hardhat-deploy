@@ -31,4 +31,14 @@ contract ShopToken is Ownable(msg.sender) {
         require(rate_ > 0);
         RATE = rate_;
     }
+
+    function withdrawTokens() external onlyOwner {
+        require(getBalanceToken() > 0, "Not enough tokens!");
+        TOKEN.transfer(owner(), getBalanceToken());
+    }
+
+    function withdrawEther() external onlyOwner {
+        require(getBalanceEther() > 0, "Not enough ether!");
+        payable(owner()).transfer(getBalanceEther());
+    }
 }
