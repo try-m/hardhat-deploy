@@ -14,6 +14,10 @@ contract ShopToken is Ownable(msg.sender) {
         RATE = _rate;
     }
 
+    function getRate() public view returns (uint) {
+        return RATE;
+    }
+
     function getBalanceToken() public view returns (uint balance) {
         balance = TOKEN.balanceOf(address(this));
     }
